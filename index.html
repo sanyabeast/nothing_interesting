@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,21 +8,91 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
+            /* Full viewport height */
             margin: 0;
-            background-color: #f0f0f0; /* Optional background color */
-            font-family: Arial, sans-serif; /* Font style */
+            background-color: #f0f0f0;
+            /* Optional background color */
+            font-family: Arial, sans-serif;
+            /* Font style */
         }
+
+        body > * {
+            margin-bottom: 8px;
+        }
+
         h1 {
-            font-size: 10vw; /* Size relative to viewport width */
-            text-transform: uppercase; /* Convert text to uppercase */
-            color: #333; /* Text color */
+            font-size: 10vw;
+            /* Size relative to viewport width */
+            text-transform: uppercase;
+            /* Convert text to uppercase */
+            color: #333;
+            /* Text color */
         }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
+
 <body>
     <h1>Привет, Макс</h1>
+    <div id="ton-connect"></div>
+    <div id="params_test"></div>
+    <script>
+        let tg = window.Telegram.WebApp;
+        console.log('BLABLA', tg)
+        tg.colorScheme = "dark"
+
+
+        let btn_show = false
+
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const result = {};
+            for (const [key, value] of params.entries()) {
+                result[key] = value;
+            }
+            return result;
+        }
+
+        // setInterval(() => {
+        //     btn_show = !btn_show
+        //     if (btn_show) {
+        //         tg.MainButton.show()
+        //         tg.MainButton.enable()
+        //     } else {
+        //         tg.MainButton.hide()
+        //         tg.MainButton.disable()
+        //     }
+        // }, 1000)
+
+        setTimeout(() => {
+            tg.sendData(JSON.stringify({
+                name: "max",
+                value: 420,
+                date: +new Date(),
+                data: {
+                    hoyo: "moyo"
+                }
+            }))
+        }, 5000)
+
+        document.getElementById("params_test").innerHTML = JSON.stringify(getUrlParams())
+
+
+
+        tg.showAlert(`Добро пожаловать`);
+    </script>
+
+    <script>
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+            buttonRootId: 'ton-connect'
+        });
+    </script>
 </body>
+
 </html>
